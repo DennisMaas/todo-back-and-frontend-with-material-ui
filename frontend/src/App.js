@@ -1,55 +1,77 @@
 import React from "react";
-import styled from 'styled-components/macro';
 import TodoList from './components/TodoList';
 import useTodos from './hooks/useTodos';
 import AddTodo from "./components/AddTodo";
-import Button from "@material-ui/core/Button/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import {makeStyles} from "@material-ui/core/styles";
+import {Container} from "@material-ui/core";
+
+const useStyles = makeStyles((theme)=> ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        marginTop: theme.spacing(8),
+        padding: theme.spacing(2),
+        textAlign: "center",
+        color: theme.palette.text.primary,
+    },
+    button: {
+        margin: theme.spacing(0.5, 0),
+    }
+}))
 
 export default function App() {
     const [todos, addTodo, deleteTodoItemFromList, upgradeTodoItem] = useTodos();
-
+    const classes = useStyles();
     return (
-        <Main>
-            <h1>Super Kanban Board </h1>
-            <AddTodo onAdd={addTodo}/>
-            <Board>
-                <TodoList
-                    todos={todos}
-                    deleteTodoItemFromList={deleteTodoItemFromList}
-                    onAdd={addTodo}
-                    upgradeTodoItem={upgradeTodoItem}
-                    checkStatus={"OPEN"}
-                />
-                <TodoList
-                    todos={todos}
-                    deleteTodoItemFromList={deleteTodoItemFromList}
-                    onAdd={addTodo}
-                    upgradeTodoItem={upgradeTodoItem}
-                    checkStatus={"IN_PROGRESS"}
-                />
-                <TodoList
-                    todos={todos}
-                    deleteTodoItemFromList={deleteTodoItemFromList}
-                    onAdd={addTodo}
-                    upgradeTodoItem={upgradeTodoItem}
-                    checkStatus={"DONE"}
-                />
-            </Board>
-        </Main>
+        <>
+            <Container maxWidth={"md"}>
+            <CssBaseline />
+            <Grid className={classes.paper} container spacing={3}>
+                <Grid item xs={12}>
+                    <Typography variant={"h1"}>
+                        Super Kanban Board
+                    </Typography>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <AddTodo onAdd={addTodo}/>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TodoList
+                            todos={todos}
+                            deleteTodoItemFromList={deleteTodoItemFromList}
+                            onAdd={addTodo}
+                            upgradeTodoItem={upgradeTodoItem}
+                            checkStatus={"OPEN"}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TodoList
+                            todos={todos}
+                            deleteTodoItemFromList={deleteTodoItemFromList}
+                            onAdd={addTodo}
+                            upgradeTodoItem={upgradeTodoItem}
+                            checkStatus={"IN_PROGRESS"}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TodoList
+                            todos={todos}
+                            deleteTodoItemFromList={deleteTodoItemFromList}
+                            onAdd={addTodo}
+                            upgradeTodoItem={upgradeTodoItem}
+                            checkStatus={"DONE"}
+                        />
+
+                    </Grid>
+            </Grid>
+        </Grid>
+        </Container>
+
+        </>
     );
 }
-
-const Main = styled.main`
-    height: 100vh;
-    padding: 8px;
-
-    h1 {
-        color: #001064;
-    }
-`;
-
-const Board = styled.section`
-    display: grid;
-    grid: 150px / 30% 30% 30%;
-    justify-content: space-evenly;
-`

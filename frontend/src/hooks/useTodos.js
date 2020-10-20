@@ -19,7 +19,6 @@ export default function useTodos() {
     const upgradeTodoItem = (id, description, status) => {
         putTodoItem(id, description, status)
             .then((newTodoItem) => setTodos([...todos.filter(todo => todo.id !== id), newTodoItem]))
-
     }
 
     return [todos, addTodo, deleteTodoItemFromList, upgradeTodoItem];
